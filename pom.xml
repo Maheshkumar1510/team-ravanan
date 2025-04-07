@@ -71,6 +71,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>teamRavanan-application-mangodb</finalName>
 	</build>
 
 </project>
