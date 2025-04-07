@@ -15,3 +15,5 @@ public class MemberDto {
     String email;
     String phone;
 }
+
+//dto
