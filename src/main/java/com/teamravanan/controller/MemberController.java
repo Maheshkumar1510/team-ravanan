@@ -21,8 +21,6 @@ public class MemberController {
     @GetMapping("/get/{id}")
     public MemberDto getEmployee(@PathVariable Long id) {
         return memberService.getMember(id);
-
-
         
     }
 }
