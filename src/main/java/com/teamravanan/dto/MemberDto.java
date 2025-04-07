@@ -16,4 +16,3 @@ public class MemberDto {
     String phone;
 }
 
-//dto
