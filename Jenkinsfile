@@ -20,20 +20,20 @@ pipeline {
 
         stage('Build JAR') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $IMAGE_NAME .'
+                bat 'docker build -t $IMAGE_NAME .'
             }
         }
 
         stage('Push to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: '1c892169c-4402-4820-a65a-dc777029b834', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    sh '''
+                    bat '''
                     echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
                     docker push $IMAGE_NAME
                     '''
@@ -43,7 +43,7 @@ pipeline {
 
         stage('Deploy Container') {
             steps {
-                sh '''
+                bat '''
                 docker stop $CONTAINER_NAME || true
                 docker rm $CONTAINER_NAME || true
                 docker run -d --name $CONTAINER_NAME -p 2020:2020 $IMAGE_NAME
