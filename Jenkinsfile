@@ -31,16 +31,18 @@ pipeline {
             }
         }
 
-        stage('Push to Docker Hub') {
+        stage('Docker Hub Login') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerid', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    bat '''
-                    echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin
-                    docker push %IMAGE_NAME%
-                    '''
-                }
+               withCredentials([string(credentialsId: 'dockerId', variable: 'dockerPwd')]) {
+                   bat "docker login -u mahesh946 -p ${dockerPwd}"
+               }
             }
         }
+        stage('Docker Push') {
+                    steps {
+                        bat "docker push mahesh946/teamravanan-application-mangodb"
+                    }
+                }
 
         stage('Deploy Container') {
             steps {
