@@ -2,12 +2,12 @@ pipeline {
     agent any
 
     tools {
-        maven "3.9.9"
+        maven '3.9.9'
     }
 
     environment {
         DOCKERHUB_USER = 'mahesh946'  // 👈 change this
-        IMAGE_NAME = "${DOCKERHUB_USER}/teamRavanan-application-mangodb"
+        IMAGE_NAME = "${DOCKERHUB_USER}/teamravanan-application-mangodb"
         CONTAINER_NAME = "teamRavanan-application-mangodb"
     }
 
@@ -32,7 +32,7 @@ pipeline {
 
         stage('Push to Docker Hub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: '10bcd8cd-ac81-49c6-8990-29579a5e78e5', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                withCredentials([usernamePassword(credentialsId: '1c892169c-4402-4820-a65a-dc777029b834', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh '''
                     echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
                     docker push $IMAGE_NAME
