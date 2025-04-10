@@ -27,11 +27,11 @@ pipeline {
         }
          stage('SonarQube Analysis') {
                      steps {
-                         withSonarQubeEnv('MySonarQube') {
-                             withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-                                 bat "mvn clean verify sonar:sonar -Dsonar.projectKey=team-ravanan -Dsonar.projectName=team-ravanan -Dsonar.token=%SONAR_TOKEN%"
-                             }
-                         }
+                        withSonarQubeEnv('MySonarQube') {
+                            withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                                sh 'mvn clean verify sonar:sonar -Dsonar.login=$SONAR_TOKEN'
+                            }
+                        }
                      }
                  }
         stage('Quality Gate') {
