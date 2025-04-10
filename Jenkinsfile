@@ -24,7 +24,20 @@ pipeline {
                 bat 'mvn clean package -DskipTests'
             }
         }
-
+        stage('SonarQube Analysis') {
+             steps {
+                  withSonarQubeEnv("${SONARQUBE}") {
+                   bat 'mvn sonar:sonar -Dsonar.projectKey=team-ravanan -Dsonar.projectName=TeamRavananApp'
+                        }
+                    }
+                }
+        stage('Quality Gate') {
+                    steps {
+                        timeout(time: 1, unit: 'MINUTES') {
+                            waitForQualityGate abortPipeline: true
+                        }
+                    }
+                }
         stage('Build Docker Image') {
             steps {
                 bat "docker build -t %IMAGE_NAME%:%BUILD_NUMBER% ."
