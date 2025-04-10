@@ -29,7 +29,7 @@ pipeline {
                      steps {
                          withSonarQubeEnv('MySonarQube') {
                              withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-                                 bat "mvn clean verify sonar:sonar -Dsonar.projectKey=teamRavanan -Dsonar.projectName=teamRavanan -Dsonar.token=%SONAR_TOKEN%"
+                                 bat "mvn clean verify sonar:sonar -Dsonar.projectKey=team-ravanan -Dsonar.projectName=team-ravanan -Dsonar.token=%SONAR_TOKEN%"
                              }
                          }
                      }
