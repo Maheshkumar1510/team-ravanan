@@ -29,7 +29,7 @@ pipeline {
                      steps {
                         withSonarQubeEnv('MySonarQube') {
                             withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-                                sh 'mvn clean verify sonar:sonar -Dsonar.login=$SONAR_TOKEN'
+                                bat 'mvn clean verify sonar:sonar -Dsonar.login=$SONAR_TOKEN'
                             }
                         }
                      }
