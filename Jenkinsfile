@@ -26,7 +26,7 @@ pipeline {
         }
         stage('SonarQube Analysis') {
              steps {
-                  withSonarQubeEnv("${SONARQUBE}") {
+                  withSonarQubeEnv('MySonarQube') {
                    bat 'mvn sonar:sonar -Dsonar.projectKey=team-ravanan -Dsonar.projectName=TeamRavananApp'
                         }
                     }
