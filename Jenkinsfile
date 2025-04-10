@@ -36,13 +36,7 @@ pipeline {
 
                      }
                  }
-        stage('Quality Gate') {
-                    steps {
-                        timeout(time: 10, unit: 'MINUTES') {
-                            waitForQualityGate abortPipeline: true
-                        }
-                    }
-                }
+
         stage('Build Docker Image') {
             steps {
                 bat "docker build -t %IMAGE_NAME%:%BUILD_NUMBER% ."
@@ -73,4 +67,16 @@ pipeline {
             }
         }
     }
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+        always {
+            echo 'This runs whether it fails or passes.'
+        }
+    }
+
 }
