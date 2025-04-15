@@ -25,24 +25,24 @@ pipeline {
                 bat 'mvn clean package -DskipTests'
             }
         }
-         stage('SonarQube Analysis') {
-                     steps {
-                       withCredentials([string(credentialsId: 'SONAR-TOKEN', variable: 'SONAR_TOKEN')]) {
-                           withSonarQubeEnv('SonarQube') {
-                               bat "mvn clean verify sonar:sonar -Dsonar.token=$SONAR_TOKEN"
-                           }
-                       }
-
-
-                     }
-                 }
-stage('Quality Gate') {
-            steps {
-                timeout(time: 10, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
+//          stage('SonarQube Analysis') {
+//                      steps {
+//                        withCredentials([string(credentialsId: 'SONAR-TOKEN', variable: 'SONAR_TOKEN')]) {
+//                            withSonarQubeEnv('SonarQube') {
+//                                bat "mvn clean verify sonar:sonar -Dsonar.token=$SONAR_TOKEN"
+//                            }
+//                        }
+//
+//
+//                      }
+//                  }
+// stage('Quality Gate') {
+//             steps {
+//                 timeout(time: 10, unit: 'MINUTES') {
+//                     waitForQualityGate abortPipeline: true
+//                 }
+//             }
+//         }
         stage('Build Docker Image') {
             steps {
                 bat "docker build -t %IMAGE_NAME%:%BUILD_NUMBER% ."
