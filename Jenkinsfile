@@ -22,7 +22,7 @@ pipeline {
 
         stage('Build JAR') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                bat 'mvn clean package -DskipTests'
             }
         }
 //          stage('SonarQube Analysis') {
@@ -47,27 +47,27 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t my-image:${BUILD_NUMBER} .'
+                bat 'docker build -t my-image:${BUILD_NUMBER} .'
             }
         }
 
         stage('Docker Hub Login') {
             steps {
                 withCredentials([string(credentialsId: 'dockerId', variable: 'dockerPwd')]) {
-                    sh "docker login -u mahesh946 -p %dockerPwd%"
+                    bat "docker login -u mahesh946 -p %dockerPwd%"
                 }
             }
         }
 
         stage('Docker Push') {
             steps {
-                sh "docker push %IMAGE_NAME%:%BUILD_NUMBER%"
+                bat "docker push %IMAGE_NAME%:%BUILD_NUMBER%"
             }
         }
 
         stage('Deploy Container') {
             steps {
-                sh '''
+                bat '''
                     docker stop %CONTAINER_NAME% || exit 0
                     docker rm %CONTAINER_NAME% || exit 0
                     docker run -d --name %CONTAINER_NAME% -p %APP_PORT%:%APP_PORT% %IMAGE_NAME%:%BUILD_NUMBER%
