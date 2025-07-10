@@ -6,12 +6,16 @@ import com.teamravanan.repo.MemberRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class MemberService {
     @Autowired
     private MemberRepo memberRepo;
     @Autowired
     private SequenceGeneratorService sequenceGeneratorService;
+
     public MemberDto addMember(MemberDto memberDto) {
 
         MemberEntity memberEntity = MemberEntity.builder()
@@ -35,5 +39,21 @@ public class MemberService {
                 .email(entity.getEmail())
                 .phone(entity.getPhone())
                 .build();
+    }
+
+    public List<MemberDto> getAllEmployee() {
+        List<MemberEntity> entity = memberRepo.findAll();
+        List<MemberDto> dtoList = new ArrayList<>();
+        for (MemberEntity m : entity) {
+            MemberDto dto = MemberDto.builder()
+                    .memId(m.getId())
+                    .firstName(m.getFirstName())
+                    .lastName(m.getLastName())
+                    .email(m.getEmail())
+                    .phone(m.getPhone())
+                    .build();
+            dtoList.add(dto);
+        }
+        return dtoList;
     }
 }
